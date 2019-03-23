@@ -1,7 +1,6 @@
 package laurenyew.dogfoodcomparisonapp.networking.mock
 
 import android.content.Context
-import laurenyew.dogfoodcomparisonapp.models.FoodRef
 import okhttp3.*
 
 /**
@@ -42,7 +41,7 @@ object MockServer {
      */
     fun getDogFoodResponse(request: Request, brandName: String): Response {
         val jsonString = when (brandName) {
-            FOOD_A -> mockFoodBDogFoodJsonResponse
+            FOOD_A -> mockFoodADogFoodJsonResponse
             FOOD_B -> mockFoodBDogFoodJsonResponse
             else -> null
         }

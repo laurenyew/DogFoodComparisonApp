@@ -13,13 +13,15 @@ class GetCompanyPriceListCommand(networkDelay: Long = 0L) : BaseNetworkCommand(n
 
     @Throws(RuntimeException::class)
     fun execute(foodRef: FoodRef): List<Company>? {
+        Log.d(TAG, "Executing $TAG with network delay: $networkDelay millis")
         val api = dogFoodApi
         val call = api?.getCompanyPriceList(foodRef.id)
+
+        val response = call?.execute()
         if (networkDelay > 0) {
             Log.d(TAG, "sleeping for $networkDelay millis")
             Thread.sleep(networkDelay)
         }
-        val response = call?.execute()
 
         val data = response?.body()
         if (response?.code() != 200 || data == null) {
@@ -29,6 +31,7 @@ class GetCompanyPriceListCommand(networkDelay: Long = 0L) : BaseNetworkCommand(n
             data.forEach {
                 companyList.add(Company(it.id, it.companyName, it.price))
             }
+            Log.d(TAG, "Completed command with company list: ${companyList.size}")
             return companyList
         }
     }

@@ -22,7 +22,7 @@ class DogFoodResultsRecyclerViewAdapter : RecyclerView.Adapter<DogFoodResultView
     private var pendingDataUpdates = ArrayDeque<List<CompanyPriceDataWrapper>>()
 
     //RecyclerView Diff.Util (List Updates)
-    open fun updateData(newData: List<CompanyPriceDataWrapper>?) {
+    fun updateData(newData: List<CompanyPriceDataWrapper>?) {
         val data = newData ?: ArrayList()
         pendingDataUpdates.add(data)
         if (pendingDataUpdates.size <= 1) {

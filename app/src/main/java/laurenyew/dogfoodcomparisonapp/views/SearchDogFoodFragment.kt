@@ -28,6 +28,7 @@ class SearchDogFoodFragment : Fragment(), SearchDogFoodContract.View {
     private var delay: Long = DEFAULT_SEARCH_DELAY
     private var adapter: DogFoodResultsRecyclerViewAdapter? = null
     private var presenter: SearchDogFoodContract.Presenter? = null
+    private var searchTerm: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -108,8 +109,17 @@ class SearchDogFoodFragment : Fragment(), SearchDogFoodContract.View {
     private fun onSearch(newText: String?) {
         if (isAdded && isVisible) {
             val newSearchTerm = if (newText?.isNotEmpty() == true) newText else null
-            loadingProgressBar.visibility = View.VISIBLE
-            presenter?.onSearch(newSearchTerm)
+            //Don't allow duplicate searches
+            if (searchTerm != newSearchTerm) {
+                searchTerm = newSearchTerm
+                //Reset state for new search
+                adapter?.updateData(null)
+                companyPriceEmptyTextView.visibility = View.GONE
+                //Show loading bar
+                loadingProgressBar.visibility = View.VISIBLE
+                //Make search call
+                presenter?.onSearch(newSearchTerm)
+            }
         }
     }
     //endregion
