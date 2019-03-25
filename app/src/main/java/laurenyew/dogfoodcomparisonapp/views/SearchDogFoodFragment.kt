@@ -158,6 +158,6 @@ class SearchDogFoodFragment : Fragment(), SearchDogFoodContract.View {
                 arguments = bundle
             }
 
-        private const val DEFAULT_SEARCH_DELAY = 1500L
+        private const val DEFAULT_SEARCH_DELAY = 1000L
     }
 }

@@ -18,7 +18,9 @@ import kotlin.coroutines.CoroutineContext
  * RecyclerViewAdapter for showing the dog food results
  * With performance updates (update only parts of list that have changed)
  */
-class DogFoodResultsRecyclerViewAdapter : RecyclerView.Adapter<DogFoodResultViewHolder>(), CoroutineScope {
+class DogFoodResultsRecyclerViewAdapter :
+    RecyclerView.Adapter<DogFoodResultViewHolder>(), CoroutineScope {
+
     private val job = Job()
     private var data: MutableList<CompanyPriceDataWrapper> = ArrayList()
     private var pendingDataUpdates = ArrayDeque<List<CompanyPriceDataWrapper>>()
@@ -28,16 +30,19 @@ class DogFoodResultsRecyclerViewAdapter : RecyclerView.Adapter<DogFoodResultView
 
     //RecyclerView Diff.Util (List Updates)
     fun updateData(newData: List<CompanyPriceDataWrapper>?) {
-        val data = newData ?: ArrayList()
-        pendingDataUpdates.add(data)
-        if (pendingDataUpdates.size <= 1) {
-            updateDataInternal(data)
+        if (isActive) {
+            val data = newData ?: ArrayList()
+            pendingDataUpdates.add(data)
+            if (pendingDataUpdates.size <= 1) {
+                updateDataInternal(data)
+            }
         }
     }
 
     //If the adapter is destroyed, cancel any running jobs
     fun onDestroy() {
         job.cancel()
+        pendingDataUpdates.clear()
     }
 
     /**
@@ -50,9 +55,10 @@ class DogFoodResultsRecyclerViewAdapter : RecyclerView.Adapter<DogFoodResultView
         launch {
             val diffCallback = createDataDiffCallback(oldData, newData)
             val diffResult = DiffUtil.calculateDiff(diffCallback)
-
-            withContext(Dispatchers.Main) {
-                applyDataDiffResult(newData, diffResult)
+            if (isActive) {
+                withContext(Dispatchers.Main) {
+                    applyDataDiffResult(newData, diffResult)
+                }
             }
         }
     }
