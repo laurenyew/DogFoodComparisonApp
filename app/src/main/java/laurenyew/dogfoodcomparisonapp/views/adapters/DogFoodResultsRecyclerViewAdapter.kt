@@ -1,15 +1,16 @@
 package laurenyew.dogfoodcomparisonapp.views.adapters
 
-import android.os.Handler
 import android.support.v7.util.DiffUtil
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import kotlinx.coroutines.*
 import laurenyew.dogfoodcomparisonapp.R
 import laurenyew.dogfoodcomparisonapp.views.adapters.data.CompanyPriceDataDiffCallback
 import laurenyew.dogfoodcomparisonapp.views.adapters.data.CompanyPriceDataWrapper
 import laurenyew.dogfoodcomparisonapp.views.adapters.viewholder.DogFoodResultViewHolder
 import java.util.*
+import kotlin.coroutines.CoroutineContext
 
 /**
  * @author Lauren Yew
@@ -17,9 +18,13 @@ import java.util.*
  * RecyclerViewAdapter for showing the dog food results
  * With performance updates (update only parts of list that have changed)
  */
-class DogFoodResultsRecyclerViewAdapter : RecyclerView.Adapter<DogFoodResultViewHolder>() {
+class DogFoodResultsRecyclerViewAdapter : RecyclerView.Adapter<DogFoodResultViewHolder>(), CoroutineScope {
+    private val job = Job()
     private var data: MutableList<CompanyPriceDataWrapper> = ArrayList()
     private var pendingDataUpdates = ArrayDeque<List<CompanyPriceDataWrapper>>()
+
+    override val coroutineContext: CoroutineContext
+        get() = Dispatchers.Default + job
 
     //RecyclerView Diff.Util (List Updates)
     fun updateData(newData: List<CompanyPriceDataWrapper>?) {
@@ -30,6 +35,11 @@ class DogFoodResultsRecyclerViewAdapter : RecyclerView.Adapter<DogFoodResultView
         }
     }
 
+    //If the adapter is destroyed, cancel any running jobs
+    fun onDestroy() {
+        job.cancel()
+    }
+
     /**
      * Handle the diff util update on a background thread
      * (this can take O(n) time so we don't want it on the main thread)
@@ -37,16 +47,14 @@ class DogFoodResultsRecyclerViewAdapter : RecyclerView.Adapter<DogFoodResultView
     private fun updateDataInternal(newData: List<CompanyPriceDataWrapper>?) {
         val oldData = ArrayList(data)
 
-        //TODO: Kotlin Coroutines here?
-        val handler = Handler()
-        Thread(Runnable {
+        launch {
             val diffCallback = createDataDiffCallback(oldData, newData)
             val diffResult = DiffUtil.calculateDiff(diffCallback)
 
-            handler.post {
+            withContext(Dispatchers.Main) {
                 applyDataDiffResult(newData, diffResult)
             }
-        }).start()
+        }
     }
 
     /**
@@ -93,5 +101,5 @@ class DogFoodResultsRecyclerViewAdapter : RecyclerView.Adapter<DogFoodResultView
     }
 
     override fun getItemCount(): Int = data.size
-    //endregion
+//endregion
 }

@@ -49,9 +49,9 @@ class SearchDogFoodActivity : AppCompatActivity() {
     private fun setupFragment() {
         val fragment =
             if (isSlow) {
-                SearchDogFoodFragment.newInstance(techType, slowDelay) //delay of 3 mins
+                SearchDogFoodFragment.newInstance(techType, slowDelay) //delay of 6 millis
             } else {
-                SearchDogFoodFragment.newInstance(techType)
+                SearchDogFoodFragment.newInstance(techType)//Delay of 3 millis
             }
 
         supportFragmentManager.beginTransaction()
@@ -70,6 +70,6 @@ class SearchDogFoodActivity : AppCompatActivity() {
                 putExtra(isSlowKey, isSlow)
             }
 
-        private const val slowDelay: Long = 6 * 1000
+        private const val slowDelay: Long = 3000
     }
 }

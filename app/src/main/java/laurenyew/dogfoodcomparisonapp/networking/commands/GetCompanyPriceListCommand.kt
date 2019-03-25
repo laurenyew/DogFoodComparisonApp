@@ -20,7 +20,7 @@ class GetCompanyPriceListCommand(networkDelay: Long = 0L) : BaseNetworkCommand(n
             Log.d(TAG, "Executing $TAG with network delay: $networkDelay millis")
             val call = api?.getCompanyPriceList(foodRef.id)
             try {
-                mockNetworkDelay(TAG, foodRef?.brandName)
+                mockNetworkDelay(TAG, foodRef.brandName)
                 val response = call?.execute()
                 parseResponse(response, foodRef)
             } finally {

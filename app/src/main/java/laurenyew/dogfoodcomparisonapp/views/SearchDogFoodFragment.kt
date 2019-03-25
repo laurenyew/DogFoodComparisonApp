@@ -72,6 +72,18 @@ class SearchDogFoodFragment : Fragment(), SearchDogFoodContract.View {
         presenter?.onBind(this, delay)
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        presenter?.unBind()
+        adapter?.onDestroy()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter = null
+        adapter = null
+    }
+
     //region MVP
     override fun onSearchResultsLoaded(data: List<CompanyPriceDataWrapper>?) {
         if (isAdded && isVisible) {
@@ -123,8 +135,6 @@ class SearchDogFoodFragment : Fragment(), SearchDogFoodContract.View {
             //Don't allow duplicate searches
             if (searchTerm != newSearchTerm) {
                 searchTerm = newSearchTerm
-                //Reset state for new search
-                adapter?.updateData(null)
                 companyPriceEmptyTextView.visibility = View.GONE
                 //Show loading bar
                 loadingProgressBar.visibility = View.VISIBLE
