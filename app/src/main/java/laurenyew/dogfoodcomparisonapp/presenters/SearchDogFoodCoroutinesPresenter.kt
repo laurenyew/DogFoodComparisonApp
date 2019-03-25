@@ -62,7 +62,10 @@ class SearchDogFoodCoroutinesPresenter : SearchDogFoodContract.Presenter, Corout
                     }
                 } catch (runtimeException: RuntimeException) {
                     withContext(Dispatchers.Main) {
-                        updateViewWithSearchResults(null, runtimeException.message)
+                        updateViewWithSearchResults(
+                            null,
+                            runtimeException.message
+                        )
                     }
                 }
             }
@@ -78,7 +81,8 @@ class SearchDogFoodCoroutinesPresenter : SearchDogFoodContract.Presenter, Corout
      * Coroutines call to get dog food results w/ network calls
      */
     @Throws(RuntimeException::class)
-    private suspend fun searchDogFoodCompanyPrices(searchTerm: String): List<CompanyPriceDataWrapper>? {
+    private suspend fun searchDogFoodCompanyPrices(searchTerm: String):
+            List<CompanyPriceDataWrapper>? {
         var dogFoodCompanyPrices: List<CompanyPriceDataWrapper>? = null
         //Put these dependent calls in the same scope
         coroutineScope {
@@ -115,7 +119,6 @@ class SearchDogFoodCoroutinesPresenter : SearchDogFoodContract.Presenter, Corout
         } finally {
             command.finish()
         }
-
     }
 
     /**

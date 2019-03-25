@@ -23,8 +23,8 @@ open class BaseNetworkCommand(val networkDelay: Long = 0L) : CoroutineScope {
         get() = Dispatchers.IO + job
 
     fun mockNetworkDelay(methodName: String, searchTerm: String) {
-        var delayTime = 1000L
-        while (delayTime < networkDelay) {
+        var delayTime = DELAY_SPLIT_TIME
+        while (delayTime <= networkDelay) {
             if (!isActive) {
                 Log.d(TAG, "------- CANCEL network delay for $methodName($searchTerm)")
                 break
@@ -42,6 +42,6 @@ open class BaseNetworkCommand(val networkDelay: Long = 0L) : CoroutineScope {
 
     companion object {
         val TAG: String = BaseNetworkCommand::class.java.simpleName
-        const val DELAY_SPLIT_TIME = 1000L
+        const val DELAY_SPLIT_TIME = 500L
     }
 }
