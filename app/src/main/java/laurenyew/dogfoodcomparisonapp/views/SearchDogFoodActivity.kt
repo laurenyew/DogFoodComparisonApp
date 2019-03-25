@@ -27,7 +27,7 @@ class SearchDogFoodActivity : AppCompatActivity() {
         // Show the Up button in the action bar.
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        savedInstanceState?.let {
+        intent.extras?.let {
             techType = it.get(techTypeKey) as? TechType ?: TechType.KotlinCoroutines
             isSlow = it.getBoolean(isSlowKey, false)
         }
@@ -70,6 +70,6 @@ class SearchDogFoodActivity : AppCompatActivity() {
                 putExtra(isSlowKey, isSlow)
             }
 
-        private const val slowDelay: Long = 3 * 60 * 1000
+        private const val slowDelay: Long = 6 * 1000
     }
 }

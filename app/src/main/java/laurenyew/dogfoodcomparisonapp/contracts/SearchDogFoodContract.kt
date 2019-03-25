@@ -10,6 +10,7 @@ interface SearchDogFoodContract {
     interface View {
         fun onSearchResultsLoaded(data: List<CompanyPriceDataWrapper>?)
         fun onSearchFailed(errorMessage: String)
+        fun onSearchJobCancelled(searchTerm: String)
     }
 
     interface Presenter {

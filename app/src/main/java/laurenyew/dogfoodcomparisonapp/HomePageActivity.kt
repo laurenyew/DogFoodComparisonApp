@@ -55,8 +55,7 @@ class HomePageActivity : AppCompatActivity() {
      * Open the feature to search for dog food
      */
     private fun openSearchForDogFoodPage() {
-        val intent =
-            SearchDogFoodActivity.newInstance(baseContext, techType)
+        val intent = SearchDogFoodActivity.newInstance(baseContext, techType)
         startActivity(intent)
     }
 
@@ -64,8 +63,7 @@ class HomePageActivity : AppCompatActivity() {
      * Open the feature for a slow network call searching for dog food
      */
     private fun openSlowSearchForDogFoodPage() {
-        val intent =
-            SearchDogFoodActivity.newInstance(baseContext, techType)
+        val intent = SearchDogFoodActivity.newInstance(baseContext, techType, true)
         startActivity(intent)
     }
 }

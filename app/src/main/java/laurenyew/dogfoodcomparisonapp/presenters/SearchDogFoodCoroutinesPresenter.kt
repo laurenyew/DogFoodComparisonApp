@@ -19,10 +19,17 @@ class SearchDogFoodCoroutinesPresenter : SearchDogFoodContract.Presenter, Corout
     private lateinit var job: Job
     private var viewRef: WeakReference<SearchDogFoodContract.View>? = null
     private var networkCallDelay: Long = 0L
+    private var searchJob: Job? = null
 
     //region Getters
     val view: SearchDogFoodContract.View?
         get() = viewRef?.get()
+
+    /**
+     * Launch coroutines on a background pool of threads
+     */
+    override val coroutineContext: CoroutineContext
+        get() = Dispatchers.Default + job
     //endregion
 
     override fun onBind(view: SearchDogFoodContract.View, delay: Long) {
@@ -42,27 +49,28 @@ class SearchDogFoodCoroutinesPresenter : SearchDogFoodContract.Presenter, Corout
      */
     override fun onSearch(searchTerm: String?) {
         if (searchTerm != null) {
-            //Launch / Return on Background thread
-            launch {
+            //Only one search should be run at a time
+            searchJob?.cancel()
+
+            //Launch coroutines on Background thread pool
+            searchJob = launch {
                 try {
-                    val companyPriceResults = searchDogFoodCompanyPrices(searchTerm)
-                    updateViewWithSearchResults(companyPriceResults)
-                } catch (e: RuntimeException) {
+                    val results = searchDogFoodCompanyPrices(searchTerm)
+                    //Send updates back to UI thread
                     withContext(Dispatchers.Main) {
-                        updateViewWithSearchResults(null, e)
+                        updateViewWithSearchResults(results)
+                    }
+                } catch (runtimeException: RuntimeException) {
+                    withContext(Dispatchers.Main) {
+                        updateViewWithSearchResults(null, runtimeException.message)
                     }
                 }
             }
+
         } else {
             view?.onSearchResultsLoaded(null)
         }
     }
-
-    /**
-     * Launch coroutines on a background pool of threads
-     */
-    override val coroutineContext: CoroutineContext
-        get() = Dispatchers.Default + job
 
     //region Helper Methods
 
@@ -72,14 +80,11 @@ class SearchDogFoodCoroutinesPresenter : SearchDogFoodContract.Presenter, Corout
     @Throws(RuntimeException::class)
     private suspend fun searchDogFoodCompanyPrices(searchTerm: String): List<CompanyPriceDataWrapper>? {
         var dogFoodCompanyPrices: List<CompanyPriceDataWrapper>? = null
-        //Make network calls on IO thread
-        withContext(Dispatchers.IO) {
-            val deferredResult = async {
-                getDogFood(searchTerm)?.let { foodRef ->
-                    getCompanyPriceList(foodRef)
-                }
-            }
-            dogFoodCompanyPrices = parseSearchResults(deferredResult.await())
+        //Put these dependent calls in the same scope
+        coroutineScope {
+            val dogFood = getDogFood(searchTerm)
+            val result = dogFood?.let { getCompanyPriceList(it) }
+            dogFoodCompanyPrices = parseSearchResults(result)
         }
         return dogFoodCompanyPrices
     }
@@ -88,34 +93,42 @@ class SearchDogFoodCoroutinesPresenter : SearchDogFoodContract.Presenter, Corout
      * Coroutines call to update the view on the main thread
      * with results
      */
-    private suspend fun updateViewWithSearchResults(
+    private fun updateViewWithSearchResults(
         companyPriceResults: List<CompanyPriceDataWrapper>?,
-        exception: Exception? = null
+        errorMessage: String? = null
     ) {
-        withContext(Dispatchers.Main) {
-            view?.onSearchResultsLoaded(companyPriceResults)
-            exception?.message?.let {
-                view?.onSearchFailed(it)
-            }
+        view?.onSearchResultsLoaded(companyPriceResults)
+        errorMessage?.let {
+            view?.onSearchFailed(it)
         }
     }
+
 
     /**
      * Make a network call to get the dog food
      */
     @Throws(RuntimeException::class)
-    private fun getDogFood(brandName: String): FoodRef? {
+    private suspend fun getDogFood(brandName: String): FoodRef? {
         val command = GetDogFoodCommand(networkCallDelay)
-        return command.execute(brandName)
+        try {
+            return command.execute(brandName)
+        } finally {
+            command.finish()
+        }
+
     }
 
     /**
      * Make a network call to get the company price list
      */
     @Throws(RuntimeException::class)
-    private fun getCompanyPriceList(foodRef: FoodRef): List<Company>? {
+    private suspend fun getCompanyPriceList(foodRef: FoodRef): List<Company>? {
         val command = GetCompanyPriceListCommand(networkCallDelay)
-        return command.execute(foodRef)
+        try {
+            return command.execute(foodRef)
+        } finally {
+            command.finish()
+        }
     }
 
     /**
@@ -131,5 +144,5 @@ class SearchDogFoodCoroutinesPresenter : SearchDogFoodContract.Presenter, Corout
         }
         return data
     }
-    //endregion
+//endregion
 }

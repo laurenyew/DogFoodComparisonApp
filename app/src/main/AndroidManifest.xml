@@ -19,7 +19,12 @@
             </intent-filter>
         </activity>
         <activity android:name=".views.SearchDogFoodActivity"
-                  android:label="@string/search_dog_food_label"/>
+                  android:label="@string/search_dog_food_label">
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value=".HomePageActivity"/>
+        </activity>
     </application>
 
 </manifest>

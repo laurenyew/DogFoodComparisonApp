@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import kotlinx.android.synthetic.main.fragment_search_dog_food.*
 import laurenyew.dogfoodcomparisonapp.R
 import laurenyew.dogfoodcomparisonapp.TechType
@@ -94,6 +95,16 @@ class SearchDogFoodFragment : Fragment(), SearchDogFoodContract.View {
             companyPriceEmptyTextView.text = getString(R.string.search_dog_food_empty_error, errorMessage)
         }
     }
+
+    override fun onSearchJobCancelled(searchTerm: String) {
+        if (isAdded && isVisible) {
+            Toast.makeText(
+                context,
+                "Search For dog food results for search term: $searchTerm cancelled.",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+    }
     //endregion
 
     //region Helper Methods
@@ -137,6 +148,6 @@ class SearchDogFoodFragment : Fragment(), SearchDogFoodContract.View {
                 arguments = bundle
             }
 
-        private const val DEFAULT_SEARCH_DELAY = 2000L
+        private const val DEFAULT_SEARCH_DELAY = 1500L
     }
 }
