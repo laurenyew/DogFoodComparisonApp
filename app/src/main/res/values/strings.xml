@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">DogFoodComparisonApp</string>
+    <string name="title_kotlin_coroutines">Kotlin Coroutines</string>
+    <string name="title_rxjava">RxJava</string>
+    <string name="title_live_data">Live Data</string>
+    <string name="message_using_kotlin_coroutines">Using Kotlin Coroutines</string>
+    <string name="message_using_rxjava">Using RxJava</string>
+    <string name="message_using_live_data">Using Live Data</string>
+    <string name="search_dog_food_empty">No Results.</string>
+    <string name="search_dog_food_empty_error">No Results.\nError:\n%s</string>
+    <string name="search_dog_food_label">Search Dog Food</string>
+    <string name="search_hint">Choose a dog food brand name to search for results:\n(Executing a new search will cancel
+        any running search)
+    </string>
+</resources>

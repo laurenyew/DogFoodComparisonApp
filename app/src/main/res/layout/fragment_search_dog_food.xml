@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:focusable="true"
+        android:orientation="vertical">
+
+    <TextView
+            android:id="@+id/searchHintTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/search_hint"
+            android:textAlignment="center"
+            android:visibility="visible"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+    <Button
+            android:id="@+id/searchFoodAButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="FOOD_A"
+            app:layout_constraintTop_toBottomOf="@id/searchHintTextView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+    <Button
+            android:id="@+id/searchFoodBButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="FOOD_B"
+            app:layout_constraintTop_toBottomOf="@id/searchFoodAButton"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+    <Button
+            android:id="@+id/searchInvalidFoodButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Invalid Food Brand Name"
+            app:layout_constraintTop_toBottomOf="@+id/searchFoodBButton"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+    <android.support.v7.widget.RecyclerView
+            android:id="@+id/companyPriceRecyclerView"
+            android:layout_width="0dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintHeight_default="wrap"
+            android:layout_height="wrap_content"
+            app:layout_constrainedHeight="true"
+            app:layout_constraintTop_toBottomOf="@+id/searchInvalidFoodButton"
+            android:layout_marginBottom="16dp" app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintVertical_bias="0.0" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"/>
+
+    <TextView
+            android:id="@+id/companyPriceEmptyTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/search_dog_food_empty"
+            android:textAlignment="center"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/searchInvalidFoodButton"
+            app:layout_constraintVertical_bias="0.20"/>
+
+    <ProgressBar
+            android:id="@+id/loadingProgressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/searchInvalidFoodButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:visibility="gone"/>
+</android.support.constraint.ConstraintLayout>
