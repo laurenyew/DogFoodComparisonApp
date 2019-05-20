@@ -1,6 +1,7 @@
 package laurenyew.dogfoodcomparisonapp.networking.mock
 
 import android.content.Context
+import android.support.annotation.VisibleForTesting
 import okhttp3.*
 
 /**
@@ -18,10 +19,14 @@ object MockServer {
     private const val FOOD_A_GET_COMPANY_PRICE_LIST_MOCK_RESPONSE_FILE = "mockFoodACompanyListResponse.json"
     private const val FOOD_B_GET_COMPANY_PRICE_LIST_MOCK_RESPONSE_FILE = "mockFoodBCompanyListResponse.json"
 
-    private lateinit var mockFoodADogFoodJsonResponse: String
-    private lateinit var mockFoodBDogFoodJsonResponse: String
-    private lateinit var mockFoodACompanyListJsonResponse: String
-    private lateinit var mockFoodBCompanyListJsonResponse: String
+    @VisibleForTesting
+    lateinit var mockFoodADogFoodJsonResponse: String
+    @VisibleForTesting
+    lateinit var mockFoodBDogFoodJsonResponse: String
+    @VisibleForTesting
+    lateinit var mockFoodACompanyListJsonResponse: String
+    @VisibleForTesting
+    lateinit var mockFoodBCompanyListJsonResponse: String
 
     /**
      * Setup must be called so we can set up the mock responses

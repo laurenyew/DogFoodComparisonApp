@@ -1,0 +1,12 @@
+[
+  {
+    "id": "Petco_ID",
+    "company_name": "Petco",
+    "price": "$70.00"
+  },
+  {
+    "id": "Chewy_ID",
+    "company_name": "Chewy",
+    "price": "$50.00"
+  }
+]
