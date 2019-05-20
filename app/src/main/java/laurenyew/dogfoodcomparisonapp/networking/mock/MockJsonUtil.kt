@@ -1,6 +1,7 @@
 package laurenyew.dogfoodcomparisonapp.networking.mock
 
 import android.content.Context
+import android.support.annotation.VisibleForTesting
 import java.io.BufferedReader
 import java.io.InputStream
 import java.io.InputStreamReader
@@ -20,7 +21,8 @@ object MockJsonUtil {
     }
 
     @Throws(Exception::class)
-    private fun convertInputStreamToString(inputStream: InputStream): String {
+    @VisibleForTesting
+    fun convertInputStreamToString(inputStream: InputStream): String {
         val reader = BufferedReader(InputStreamReader(inputStream))
         val buffer = StringBuilder()
         var line: String? = reader.readLine()

@@ -12,4 +12,6 @@
     <string name="search_hint">Choose a dog food brand name to search for results:\n(Executing a new search will cancel
         any running search)
     </string>
+    <string name="dog_food_a">FOOD_A</string>
+    <string name="dog_food_b">FOOD_B</string>
 </resources>

@@ -23,7 +23,7 @@
             android:id="@+id/searchFoodAButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="FOOD_A"
+            android:text="@string/dog_food_a"
             app:layout_constraintTop_toBottomOf="@id/searchHintTextView"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
@@ -31,7 +31,7 @@
             android:id="@+id/searchFoodBButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="FOOD_B"
+            android:text="@string/dog_food_b"
             app:layout_constraintTop_toBottomOf="@id/searchFoodAButton"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>

@@ -1,5 +1,6 @@
 package laurenyew.dogfoodcomparisonapp.presenters
 
+import android.support.annotation.VisibleForTesting
 import kotlinx.coroutines.*
 import laurenyew.dogfoodcomparisonapp.contracts.SearchDogFoodContract
 import laurenyew.dogfoodcomparisonapp.models.Company
@@ -16,12 +17,15 @@ import kotlin.coroutines.CoroutineContext
  * Search Dog Food Contract Presenter using Kotlin Coroutines for threading
  */
 class SearchDogFoodCoroutinesPresenter : SearchDogFoodContract.Presenter, CoroutineScope {
-    private lateinit var job: Job
+    @VisibleForTesting
+    lateinit var job: Job
     private var viewRef: WeakReference<SearchDogFoodContract.View>? = null
     private var networkCallDelay: Long = 0L
-    private var searchJob: Job? = null
+    @VisibleForTesting
+    var searchJob: Job? = null
 
     //region Getters
+    @VisibleForTesting
     val view: SearchDogFoodContract.View?
         get() = viewRef?.get()
 
@@ -81,7 +85,8 @@ class SearchDogFoodCoroutinesPresenter : SearchDogFoodContract.Presenter, Corout
      * Coroutines call to get dog food results w/ network calls
      */
     @Throws(RuntimeException::class)
-    private suspend fun searchDogFoodCompanyPrices(searchTerm: String):
+    @VisibleForTesting
+    suspend fun searchDogFoodCompanyPrices(searchTerm: String):
             List<CompanyPriceDataWrapper>? {
         var dogFoodCompanyPrices: List<CompanyPriceDataWrapper>? = null
         //Put these dependent calls in the same scope
@@ -97,7 +102,8 @@ class SearchDogFoodCoroutinesPresenter : SearchDogFoodContract.Presenter, Corout
      * Coroutines call to update the view on the main thread
      * with results
      */
-    private fun updateViewWithSearchResults(
+    @VisibleForTesting
+    fun updateViewWithSearchResults(
         companyPriceResults: List<CompanyPriceDataWrapper>?,
         errorMessage: String? = null
     ) {
@@ -137,6 +143,7 @@ class SearchDogFoodCoroutinesPresenter : SearchDogFoodContract.Presenter, Corout
     /**
      * Parse the search results and update UI
      */
+    @VisibleForTesting
     private fun parseSearchResults(companyPriceList: List<Company>?): List<CompanyPriceDataWrapper>? {
         var data: ArrayList<CompanyPriceDataWrapper>? = null
         if (companyPriceList != null) {

@@ -15,8 +15,10 @@ class GetDogFoodCommand(networkDelay: Long = 0L) : BaseNetworkCommand(networkDel
     @Throws(RuntimeException::class)
     suspend fun execute(brandName: String): FoodRef? {
         val deferred = async {
-            Log.d(GetCompanyPriceListCommand.TAG, "Executing $TAG " +
-                    "with network delay: $networkDelay millis")
+            Log.d(
+                TAG, "Executing $TAG " +
+                        "with network delay: $networkDelay millis"
+            )
             val call = api?.getDogFood(brandName)
             try {
                 mockNetworkDelay(TAG, brandName)
