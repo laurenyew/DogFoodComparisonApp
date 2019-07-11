@@ -3,9 +3,9 @@ package laurenyew.dogfoodcomparisonapp.views
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.NavUtils
-import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
+import androidx.core.app.NavUtils
+import androidx.fragment.app.FragmentActivity
 import laurenyew.dogfoodcomparisonapp.R
 import laurenyew.dogfoodcomparisonapp.TechType
 
@@ -15,7 +15,7 @@ import laurenyew.dogfoodcomparisonapp.TechType
  * Basic Search Dog Food Features +
  * Extra arguments for showing different features
  */
-class SearchDogFoodActivity : AppCompatActivity() {
+class SearchDogFoodActivity : FragmentActivity() {
     private var techType = TechType.KotlinCoroutines
     private var isSlow = false
 
@@ -25,7 +25,7 @@ class SearchDogFoodActivity : AppCompatActivity() {
         setContentView(R.layout.activity_search_dog_food)
 
         // Show the Up button in the action bar.
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        actionBar?.setDisplayHomeAsUpEnabled(true)
 
         intent.extras?.let {
             techType = it.get(techTypeKey) as? TechType ?: TechType.KotlinCoroutines

@@ -1,9 +1,9 @@
 package laurenyew.dogfoodcomparisonapp.views.adapters
 
-import android.support.v7.util.DiffUtil
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.*
 import laurenyew.dogfoodcomparisonapp.R
 import laurenyew.dogfoodcomparisonapp.views.adapters.data.CompanyPriceDataDiffCallback

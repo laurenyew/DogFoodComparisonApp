@@ -3,6 +3,8 @@ package laurenyew.dogfoodcomparisonapp
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v7.app.AppCompatActivity
+import androidx.fragment.app.FragmentActivity
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_home_page.message
 import kotlinx.android.synthetic.main.activity_home_page.navigation
 import kotlinx.android.synthetic.main.activity_home_page.openSearchForDogFoodButton
@@ -15,7 +17,7 @@ import laurenyew.dogfoodcomparisonapp.views.SearchDogFoodActivity
  * Base Home Page: Allow user to choose which set of logic they'd like to use
  * and choose the UI pages to view sample behavior
  */
-class HomePageActivity : AppCompatActivity() {
+class HomePageActivity : FragmentActivity() {
     private var techType = TechType.KotlinCoroutines
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->

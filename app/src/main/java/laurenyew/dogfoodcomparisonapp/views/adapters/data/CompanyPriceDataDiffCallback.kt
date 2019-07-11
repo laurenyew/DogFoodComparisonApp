@@ -1,6 +1,6 @@
 package laurenyew.dogfoodcomparisonapp.views.adapters.data
 
-import android.support.v7.util.DiffUtil
+import androidx.recyclerview.widget.DiffUtil
 
 /**
  * @author Lauren Yew
