@@ -1,6 +1,6 @@
 package laurenyew.dogfoodcomparisonapp.presenters
 
-import android.support.annotation.VisibleForTesting
+import androidx.annotation.VisibleForTesting
 import kotlinx.coroutines.*
 import laurenyew.dogfoodcomparisonapp.contracts.SearchDogFoodContract
 import laurenyew.dogfoodcomparisonapp.models.Company
@@ -21,6 +21,7 @@ class SearchDogFoodCoroutinesPresenter : SearchDogFoodContract.Presenter, Corout
     lateinit var job: Job
     private var viewRef: WeakReference<SearchDogFoodContract.View>? = null
     private var networkCallDelay: Long = 0L
+
     @VisibleForTesting
     var searchJob: Job? = null
 

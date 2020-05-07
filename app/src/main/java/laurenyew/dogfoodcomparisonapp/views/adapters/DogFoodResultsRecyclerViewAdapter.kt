@@ -1,9 +1,9 @@
 package laurenyew.dogfoodcomparisonapp.views.adapters
 
-import android.support.v7.util.DiffUtil
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.*
 import laurenyew.dogfoodcomparisonapp.R
 import laurenyew.dogfoodcomparisonapp.views.adapters.data.CompanyPriceDataDiffCallback
@@ -67,7 +67,10 @@ class DogFoodResultsRecyclerViewAdapter :
      * UI thread callback to apply the diff result to the adapter
      * and take in the latest update
      */
-    private fun applyDataDiffResult(newData: List<CompanyPriceDataWrapper>?, diffResult: DiffUtil.DiffResult) {
+    private fun applyDataDiffResult(
+        newData: List<CompanyPriceDataWrapper>?,
+        diffResult: DiffUtil.DiffResult
+    ) {
         if (pendingDataUpdates.isNotEmpty()) {
             pendingDataUpdates.remove()
         }
@@ -96,7 +99,8 @@ class DogFoodResultsRecyclerViewAdapter :
 
     //region RecyclerView.Adapter
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DogFoodResultViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.dog_food_result_preview_view, parent, false)
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.dog_food_result_preview_view, parent, false)
         return DogFoodResultViewHolder(view)
     }
 

@@ -1,7 +1,7 @@
 package laurenyew.dogfoodcomparisonapp.networking.mock
 
 import android.content.Context
-import android.support.annotation.VisibleForTesting
+import androidx.annotation.VisibleForTesting
 import java.io.BufferedReader
 import java.io.InputStream
 import java.io.InputStreamReader

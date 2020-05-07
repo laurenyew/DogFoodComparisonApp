@@ -1,7 +1,7 @@
 package laurenyew.dogfoodcomparisonapp.networking.mock
 
 import android.content.Context
-import android.support.annotation.VisibleForTesting
+import androidx.annotation.VisibleForTesting
 import okhttp3.*
 
 /**
@@ -16,15 +16,20 @@ object MockServer {
 
     private const val FOOD_A_GET_FOOD_MOCK_RESPONSE_FILE = "mockFoodADogFoodResponse.json"
     private const val FOOD_B_GET_FOOD_MOCK_RESPONSE_FILE = "mockFoodBDogFoodResponse.json"
-    private const val FOOD_A_GET_COMPANY_PRICE_LIST_MOCK_RESPONSE_FILE = "mockFoodACompanyListResponse.json"
-    private const val FOOD_B_GET_COMPANY_PRICE_LIST_MOCK_RESPONSE_FILE = "mockFoodBCompanyListResponse.json"
+    private const val FOOD_A_GET_COMPANY_PRICE_LIST_MOCK_RESPONSE_FILE =
+        "mockFoodACompanyListResponse.json"
+    private const val FOOD_B_GET_COMPANY_PRICE_LIST_MOCK_RESPONSE_FILE =
+        "mockFoodBCompanyListResponse.json"
 
     @VisibleForTesting
     lateinit var mockFoodADogFoodJsonResponse: String
+
     @VisibleForTesting
     lateinit var mockFoodBDogFoodJsonResponse: String
+
     @VisibleForTesting
     lateinit var mockFoodACompanyListJsonResponse: String
+
     @VisibleForTesting
     lateinit var mockFoodBCompanyListJsonResponse: String
 
@@ -32,12 +37,20 @@ object MockServer {
      * Setup must be called so we can set up the mock responses
      */
     fun setup(context: Context) {
-        mockFoodADogFoodJsonResponse = MockJsonUtil.getJsonStringFromFile(context, FOOD_A_GET_FOOD_MOCK_RESPONSE_FILE)
-        mockFoodBDogFoodJsonResponse = MockJsonUtil.getJsonStringFromFile(context, FOOD_B_GET_FOOD_MOCK_RESPONSE_FILE)
+        mockFoodADogFoodJsonResponse =
+            MockJsonUtil.getJsonStringFromFile(context, FOOD_A_GET_FOOD_MOCK_RESPONSE_FILE)
+        mockFoodBDogFoodJsonResponse =
+            MockJsonUtil.getJsonStringFromFile(context, FOOD_B_GET_FOOD_MOCK_RESPONSE_FILE)
         mockFoodACompanyListJsonResponse =
-            MockJsonUtil.getJsonStringFromFile(context, FOOD_A_GET_COMPANY_PRICE_LIST_MOCK_RESPONSE_FILE)
+            MockJsonUtil.getJsonStringFromFile(
+                context,
+                FOOD_A_GET_COMPANY_PRICE_LIST_MOCK_RESPONSE_FILE
+            )
         mockFoodBCompanyListJsonResponse =
-            MockJsonUtil.getJsonStringFromFile(context, FOOD_B_GET_COMPANY_PRICE_LIST_MOCK_RESPONSE_FILE)
+            MockJsonUtil.getJsonStringFromFile(
+                context,
+                FOOD_B_GET_COMPANY_PRICE_LIST_MOCK_RESPONSE_FILE
+            )
     }
 
     /**

@@ -35,7 +35,10 @@ class GetCompanyPriceListCommand(networkDelay: Long = 0L) : BaseNetworkCommand(n
      * Parse the response from the network call
      */
     @Throws(RuntimeException::class)
-    private fun parseResponse(response: Response<List<CompanyPriceResponse>?>?, foodRef: FoodRef): ArrayList<Company> {
+    private fun parseResponse(
+        response: Response<List<CompanyPriceResponse>?>?,
+        foodRef: FoodRef
+    ): ArrayList<Company> {
         val data = response?.body()
         if (response?.code() != 200 || data == null) {
             throw RuntimeException("API call failed. Unable to find company list for given food ${foodRef.brandName}")
