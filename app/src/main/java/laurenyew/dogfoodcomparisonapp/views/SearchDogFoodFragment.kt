@@ -1,13 +1,13 @@
 package laurenyew.dogfoodcomparisonapp.views
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.widget.DividerItemDecoration
-import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_search_dog_food.*
 import laurenyew.dogfoodcomparisonapp.R
 import laurenyew.dogfoodcomparisonapp.TechType
@@ -46,16 +46,25 @@ class SearchDogFoodFragment : Fragment(), SearchDogFoodContract.View {
         presenter = createPresenter(techType)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? =
         inflater.inflate(R.layout.fragment_search_dog_food, container, false)
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         companyPriceRecyclerView.apply {
-            val linearLayoutManager = LinearLayoutManager(context)
+            val linearLayoutManager =
+                LinearLayoutManager(context)
             layoutManager = linearLayoutManager
             //Add separator lines between rows
-            val dividerItemDecoration = DividerItemDecoration(context, linearLayoutManager.orientation)
+            val dividerItemDecoration =
+                DividerItemDecoration(
+                    context,
+                    linearLayoutManager.orientation
+                )
             addItemDecoration(dividerItemDecoration)
         }
 
@@ -104,7 +113,8 @@ class SearchDogFoodFragment : Fragment(), SearchDogFoodContract.View {
 
     override fun onSearchFailed(errorMessage: String) {
         if (isAdded && isVisible) {
-            companyPriceEmptyTextView.text = getString(R.string.search_dog_food_empty_error, errorMessage)
+            companyPriceEmptyTextView.text =
+                getString(R.string.search_dog_food_empty_error, errorMessage)
         }
     }
 
@@ -150,7 +160,10 @@ class SearchDogFoodFragment : Fragment(), SearchDogFoodContract.View {
         private const val techTypeKey = "techTypeKey"
 
         @JvmStatic
-        fun newInstance(techType: TechType, delay: Long = DEFAULT_SEARCH_DELAY): SearchDogFoodFragment =
+        fun newInstance(
+            techType: TechType,
+            delay: Long = DEFAULT_SEARCH_DELAY
+        ): SearchDogFoodFragment =
             SearchDogFoodFragment().apply {
                 val bundle = Bundle()
                 bundle.putSerializable(techTypeKey, techType)

@@ -1,6 +1,6 @@
 package laurenyew.dogfoodcomparisonapp.networking
 
-import android.support.annotation.VisibleForTesting
+import androidx.annotation.VisibleForTesting
 import com.squareup.moshi.KotlinJsonAdapterFactory
 import com.squareup.moshi.Moshi
 import laurenyew.dogfoodcomparisonapp.networking.api.DogFoodApiConstants
@@ -60,7 +60,10 @@ object DogFoodApiBuilder {
             val path = url.pathSegments()[1]
             val response =
                 when (path) {
-                    DogFoodApiConstants.GET_DOG_FOOD_METHOD -> interceptGetDogFoodResponse(request, url)
+                    DogFoodApiConstants.GET_DOG_FOOD_METHOD -> interceptGetDogFoodResponse(
+                        request,
+                        url
+                    )
                     DogFoodApiConstants.GET_COMPANY_PRICE_LIST_METHOD -> interceptGetCompanyPriceListResponse(
                         request,
                         url
